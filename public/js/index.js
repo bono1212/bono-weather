@@ -12,7 +12,7 @@ var sendData = { units: 'metric', lang: 'kr', appid: appid }
 var container, options, map;
 container = document.getElementById('map');
 options = {
-	center: new kakao.maps.LatLng(35.823107, 128.118022),
+	center: new kakao.maps.LatLng(35.823107, 127.44),
 	level: 13
 };
 map = new kakao.maps.Map(container, options);
@@ -22,22 +22,25 @@ map.setZoomable(false);
 
 $.get('../json/city.json', onGetCity);
 function onGetCity(r) {
-	console.log(r);
+	//console.log(r);
 	r.cities.forEach(function(v, i){
 		sendData.lat = v.lat;
 		sendData.lon = v.lon;
 		$.get(dailyURL, sendData, onGetDaily);
+		var html = '<option>'+v.name+'</option>';
+		$("#city").append('<option value="'+v.id+'">'+v.name+'</option>');
+
 	});
 }
 function onGetDaily(r) {
-	console.log(r);
+	//console.log(r);
 	var icon = 'https://openweathermap.org/img/wn/'+r.weather[0].icon+'@2x.png';
 	var html;
 	if(r.id == 1835848 || r.id == 1841811) html = '<div class="custom-window lt">';
 	else if(r.id == 1841066 || r.id == 1843564) html = '<div class="custom-window rt">';
 	else html = '<div class="custom-window">';
 	html += '<img src="'+icon+'" style="width: 40px;">';
-	html += '<div>온도 '+r.main.temp+'℃<br>체감 '+r.main.feels_like+'℃</div>';
+	html += '<div><b>온도 '+r.main.temp+'℃<br>체감 '+r.main.feels_like+'<b>℃ </div>';
 	html += '<img src="../img/triangle.png" class="triangle">'
 	html += '</div>';
 	var position = new kakao.maps.LatLng(r.coord.lat, r.coord.lon);
@@ -48,4 +51,24 @@ function onGetDaily(r) {
 	customWindow.setMap(map);
 }
 
+
+/* **************weathet ino of current location******************* */
+navigator.geolocation.getCurrentPosition(onGetPositon, onErrorPosition);
+function onGetPositon(r) {
+	sendData.lat = r.coords.latitude;
+	sendData.lon = r.coords.longitude;
+	$.get(dailyURL, sendData, onGetDailyPosition);
+	$.get(weeklyURL, sendData, onGetWeeklyPosition);
+}
+function onErrorPosition(e) {
+	console.log(e);
+}
+function onGetDailyPosition(r) {
+	console.log(r);
+	 var dt = new Date(r.dt * 1000);
+	 console.log(dt);
+}
+function onGetWeeklyPosition(r) {
+	console.log(r);
+}
 
