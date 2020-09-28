@@ -1,18 +1,16 @@
-/* ********************전역설정********************** */
-var kakaoKey = '2a5a73dc23f9e9a00cf1d978daecc143';
-var appid = 'b059e459e8e4a4f9eee7a5505a60b714';
-var dailyURL = 'http://api.openweathermap.org/data/2.5/weather';
-var weeklyURL = 'http://api.openweathermap.org/data/2.5/forecast';
+/******************* 전역설정 ********************/
+var kakaoKey = '644d617a85cb7f28982d642138d22c33';
+var appid = '02efdd64bdc14b279bc91d9247db4722';
+var dailyURL = 'https://api.openweathermap.org/data/2.5/weather';
+var weeklyURL = 'https://api.openweathermap.org/data/2.5/forecast';
 var sendData = { units: 'metric', lang: 'kr', appid: appid }
-
 
 /************** 카카오 지도 연동 **************/
 // 1. 지도를 화면에 생성한다.
 // 2. 도시정보를 불러와서 openweathermap에 정보를 요청한다.
 // 3. 콜백된 각 도시의 날씨정보를 기존에 생성한 지도에 나타낸다.
-var container, options, map, html, position, customWindow, icon;
-	
-container = document.getElementById('map'); 
+var container, options, map;
+container = document.getElementById('map');
 options = {
 	center: new kakao.maps.LatLng(35.823107, 128.118022),
 	level: 13
@@ -34,7 +32,10 @@ function onGetCity(r) {
 function onGetDaily(r) {
 	console.log(r);
 	var icon = 'https://openweathermap.org/img/wn/'+r.weather[0].icon+'@2x.png';
-	var html = '<div class="custom-window">';
+	var html;
+	if(r.id == 1835848 || r.id == 1841811) html = '<div class="custom-window lt">';
+	else if(r.id == 1841066 || r.id == 1843564) html = '<div class="custom-window rt">';
+	else html = '<div class="custom-window">';
 	html += '<img src="'+icon+'" style="width: 40px;">';
 	html += '<div>온도 '+r.main.temp+'℃<br>체감 '+r.main.feels_like+'℃</div>';
 	html += '<img src="../img/triangle.png" class="triangle">'
@@ -46,3 +47,5 @@ function onGetDaily(r) {
 	});
 	customWindow.setMap(map);
 }
+
+
