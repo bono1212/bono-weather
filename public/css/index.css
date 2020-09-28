@@ -8,6 +8,11 @@ html, body {font-size: 16px;}
 .anibar:hover {color: yellow;}
 .anibar:hover::after {transform: scaleX(1); transform-origin: right;}
 
+/*
+.triangle {position: relative;}
+.triangle::after {content: ""; display: block; position: absolute; bottom: -9px; left: calc(50% - 10px); width: 0; height: 0;  border-right: 10px solid transparent; border-left: 10px solid transparent; border-top: 10px solid #fff;}
+*/
+
 /* header */
 .header-wrapper {background-color: rgba(0,0,0,0.4);}
 .header {display: flex; justify-content: space-between; align-items: flex-end; color: #f8f8f8; padding: 1em;}
@@ -22,6 +27,19 @@ html, body {font-size: 16px;}
 .header .navi-pc {display: flex; align-items: center; justify-content: flex-end;} 
 .header .navi-mobile {display: none;}
 
+
+/* main-wrapper */
+.main-wrapper .now-wrapper {display: flex; margin: 2rem 0;}
+.main-wrapper .map-wrapper {flex: 60% 0 0; height: 600px;}
+.main-wrapper #map {width: 100%; height: 100%;}
+.main-wrapper .loc-wrapper {flex: 38% 0 0; margin-left: 2%;}
+
+.custom-window {display: flex; background-color: #fff; align-items: center; font-size: 12px; line-height: 1.1; border: 1px solid #999; border-radius: 6px; transform: translateY(-40px); position: relative;}
+.custom-window > :nth-child(1) { flex: 40px 0 0;}
+.custom-window > :nth-child(2) {padding: 0 8px;}
+.custom-window > :nth-child(3) {position: absolute; bottom: -11px; left: calc(50% - 10px);}
+
+/* 반응 */
 @media screen and (max-width: 991px) {
 	
 }
