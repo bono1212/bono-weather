@@ -45,7 +45,7 @@ function onGetDaily(r) {
 	html += '</div>';
 	var position = new kakao.maps.LatLng(r.coord.lat, r.coord.lon);
 	var customWindow = new kakao.maps.CustomOverlay({
-			position : position, 
+			position : position,
 			content : html
 	});
 	customWindow.setMap(map);
