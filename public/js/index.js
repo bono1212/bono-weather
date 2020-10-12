@@ -26,8 +26,7 @@ function onGetCity(r) {
 		sendData.lat = v.lat;
 		sendData.lon = v.lon;
 		$.get(dailyURL, sendData, onGetDaily);
-		var html = '<option>'+v.name+'</option>';
-		$("#city").append('<option value="'+v.id+'">'+v.name+'</option>');
+		$("#city").append('<option value="'+v.id+'">'+v.name+'</option>'); //city-d option-g append
 
 	});
 }
@@ -52,22 +51,23 @@ function onGetDaily(r) {
 
 
 /* **************weathet ino of current location******************* */
-navigator.geolocation.getCurrentPosition(onGetPositon, onErrorPosition);
+navigator.geolocation.getCurrentPosition(onGetPositon, onErrorPosition); //onGetPositon - medeelel awchirwl, onErrorPosition - awchirch chadhq bol
 function onGetPositon(r) {
+	//console.log(r);
 	sendData.lat = r.coords.latitude;
 	sendData.lon = r.coords.longitude;
-	$.get(dailyURL, sendData, onGetDailyPosition);
-	$.get(weeklyURL, sendData, onGetWeeklyPosition);
+	$.get(dailyURL, sendData, onGetDailyWeather);
+	$.get(weeklyURL, sendData, onGetWeeklyWeather);
 }
 function onErrorPosition(e) {
 	console.log(e);
 }
-function onGetDailyPosition(r) {
+function onGetDailyWeather(r) {
 	console.log(r);
-	 var dt = new Date(r.dt * 1000);
+	 var dt = new Date(r.dt * 1000); //초단위 1970년부터 지금 까지 초 (js 초, java 밀리초)
 	 console.log(dt);
 }
-function onGetWeeklyPosition(r) {
+function onGetWeeklyWeather(r) {
 	console.log(r);
 }
 
