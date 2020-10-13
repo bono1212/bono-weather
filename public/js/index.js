@@ -71,9 +71,28 @@ function onGetDailyWeather(r) {
 	 $(".loc-wrapper .title-time").text(dtTime);
 	 var locTitle = r.name + ' , '+ r.sys.country;
 	 $(".loc-wrapper .title-loc").text(locTitle);
-	 
+	 var icon = 'https://openweathermap.org/img/wn/'+r.weather[0].icon+'@2x.png';
+	 $(".cont-wrapper .icon-wrap img").attr("src", icon);
+
 }
+
 function onGetWeeklyWeather(r) {
 	console.log(r);
 }
 
+
+/* 
+1. Daily content
+- r.coord.lat 위도
+- r.coord.lon 경도
+- r.main.temp 온도
+- r.main.feels_like 체감온도
+- r.main.humidity 습도
+- r.main.pressure 기압
+- r.sys.sunrise 일출(ts)
+- r.sys.sunset 일몰(ts)
+- r.weather[0].main 날씨 제목
+- r.weather[0].description 날씨 설명
+- r.wind.deg
+- r.wind.speed(m/s)
+*/
