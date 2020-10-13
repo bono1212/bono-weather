@@ -50,7 +50,7 @@ function onGetDaily(r) {
 }
 
 
-/* **************weathet ino of current location******************* */
+/* **************weathet info of current location******************* */
 navigator.geolocation.getCurrentPosition(onGetPositon, onErrorPosition); //onGetPositon - medeelel awchirwl, onErrorPosition - awchirch chadhq bol
 function onGetPositon(r) {
 	//console.log(r);
@@ -64,8 +64,14 @@ function onErrorPosition(e) {
 }
 function onGetDailyWeather(r) {
 	console.log(r);
-	 var dt = new Date(r.dt * 1000); //초단위 1970년부터 지금 까지 초 (js 초, java 밀리초)
-	 console.log(dt);
+	//YY/YYYY - M/MM - D/DD H/HH(24시간제)/h/hh(12시간제) - m/mm
+	 var dtDate = moment(r.dt * 1000).format('M월 D일'); //초단위 1970년부터 지금 까지 초 (js 초, java 밀리초)
+	 var dtTime = moment(r.dt * 1000).format('H시 m분'); //초단위 1970년부터 지금 까지 초 (js 초, java 밀리초)
+	 $(".loc-wrapper .title-date").text(dtDate);
+	 $(".loc-wrapper .title-time").text(dtTime);
+	 var locTitle = r.name + ' , '+ r.sys.country;
+	 $(".loc-wrapper .title-loc").text(locTitle);
+	 
 }
 function onGetWeeklyWeather(r) {
 	console.log(r);
