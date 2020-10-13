@@ -35,9 +35,12 @@ function onGetDaily(r) {
 	//console.log(r);
 	var icon = 'https://openweathermap.org/img/wn/'+r.weather[0].icon+'@2x.png';
 	var html;
-	if(r.id == 1835848 || r.id == 1841811) html = '<div class="custom-window lt">';
-	else if(r.id == 1841066 || r.id == 1843564) html = '<div class="custom-window rt">';
-	else html = '<div class="custom-window">';
+	if(r.id == 1835848 || r.id == 1841811) 
+		html = '<div id="c'+r.id+'" class="custom-window lt" onClick="onCustomClick('+r.id+');">';
+	else if(r.id == 1841066 || r.id == 1843564) 
+		html = '<div id="c'+r.id+'" class="custom-window rt" onClick="onCustomClick('+r.id+');">';
+	else 
+		html = '<div id="c'+r.id+'" class="custom-window" onClick="onCustomClick('+r.id+');">';
 	html += '<img src="'+icon+'" style="width: 40px;">';
 	html += '<div><b>온도 '+r.main.temp+'℃<br>체감 '+r.main.feels_like+'<b>℃ </div>';
 	html += '<img src="../img/triangle.png" class="triangle">'
@@ -49,7 +52,7 @@ function onGetDaily(r) {
 			clickable: true,
 	});
 	customWindow.setMap(map);
-		console.log(customWindow.a);
+	
 }
 
 
@@ -73,14 +76,21 @@ function onGetCityWeather() {
 	sendData.lat = null;
 	sendData.lon = null;
 	sendData.id = $(this).val();
+	$('.custom-window').removeClass("active");
+	$("#c"+sendData.id).addClass("active");
 	$.get(dailyURL, sendData, onGetDailyWeather);
 	$.get(weeklyURL, sendData, onGetWeeklyWeather);
 }
 
 
+/* **************지도click 날씨정보 ******************* */
+function onCustomClick(id, me) {
+	$("#city").val(id).trigger("change");
+}
+
+
 /* **********현재 날씨 톨백************* */
 function onGetDailyWeather(r) {
-	//console.log(r);
 	//YY/YYYY - M/MM - D/DD H/HH(24시간제)/h/hh(12시간제) - m/mm
 	 var dtDate = moment(r.dt * 1000).format('M월 D일'); //초단위 1970년부터 지금 까지 초 (js 초, java 밀리초)
 	 var dtTime = moment(r.dt * 1000).format('H시 m분'); //초단위 1970년부터 지금 까지 초 (js 초, java 밀리초)
