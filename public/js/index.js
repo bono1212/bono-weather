@@ -3,7 +3,6 @@ var appid = '02efdd64bdc14b279bc91d9247db4722';
 var dailyURL = 'https://api.openweathermap.org/data/2.5/weather';
 var weeklyURL = 'https://api.openweathermap.org/data/2.5/forecast';
 var sendData = { units: 'metric', lang: 'kr', appid: appid }
-var city;
 
 /************** 카카오 지도 연동 **************/
 // 1. 지도를 화면에 생성한다.
@@ -27,12 +26,14 @@ function onGetCity(r) {
 		sendData.id = null;
 		sendData.lat = v.lat;
 		sendData.lon = v.lon;
-		$.get(dailyURL, sendData, onGetDaily);
+		$.get(dailyURL, sendData, function(res){
+			onGetDaily(res, v.class);
+		});
 		$("#city").append('<option value="'+v.id+'">'+v.name+'</option>'); //city-d option-g append
 	});
 }
-function onGetDaily(r) {
-	console.log(r);
+function onGetDaily(r, cls) {
+	console.log(r, cls);
 	var icon = 'https://openweathermap.org/img/wn/'+r.weather[0].icon+'@2x.png';
 	var cls = city.filter(function(v) { return v.id == r.id; });
 	var html;
