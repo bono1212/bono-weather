@@ -1,5 +1,5 @@
 /* 공통사항 */
-html, body {font-size: 16px; background: url(../img/bg1.jpg)no-repeat center; background-size: cover; background-attachment: fixed;}
+html, body {font-size: 16px; background: url(../img/bg2.jpg)no-repeat center; background-size: cover; background-attachment: fixed;}
 .wrapper {width: 100%; padding: 2rem 0.75rem; }
 .wrap {max-width: 1320px; margin: 0 auto; width: calc(100% - 32px); padding: 0 16px;}
 
@@ -13,17 +13,20 @@ html, body {font-size: 16px; background: url(../img/bg1.jpg)no-repeat center; ba
 .triangle::after {content: ""; display: block; position: absolute; bottom: -9px; left: calc(50% - 10px); width: 0; height: 0;  border-right: 10px solid transparent; border-left: 10px solid transparent; border-top: 10px solid #fff;}
 */
 
-/* header */
+
+/***************** .header-wrapper *******************/
 .header-wrapper {display: flex; justify-content: center; align-items: center; color: #f8f8f8; padding: 1rem 0; user-select: none;}
 .header-wrapper > .logo-wrap {display: flex; align-items: center;} 
 .header-wrapper > .logo-wrap > .logo {width: 120px; margin-right: 1em;} 
-.header-wrapper .logo-text > div {line-height: 0.8; letter-spacing: -0.1em; font-size: 3.5em;} 
-.header-wrapper .logo-text > div:first-child {color:cyan;} 
+.header-wrapper .logo-text > div {line-height: 0.8; letter-spacing: -0.125em; font-size: 3.5em;} 
+.header-wrapper .logo-text > div:first-child {color: cyan;} 
 .header-wrapper .logo-text > div:last-child {padding-left: 0.5em;} 
 
+.bt-position {padding: 12px 16px; background-color: rgba(0,20,50,0.6); color: #f8f8f8; transition: all 0.5s; user-select: none; cursor: pointer;}
+.bt-position:hover {background-color: rgba(0,20,50,0.8);}
 
 /***************** .main-wrapper *******************/
-.main-wrapper .now-wrapper {display: flex; margin: 2rem 0;}
+.main-wrapper .now-wrapper {display: flex; flex-wrap: wrap; margin: 2rem 0;}
 .main-wrapper .map-wrapper {flex: 400px 0 0; height: 600px;}
 .main-wrapper #map {width: 100%; height: calc(100% - 54px);}
 
@@ -39,13 +42,12 @@ html, body {font-size: 16px; background: url(../img/bg1.jpg)no-repeat center; ba
 
 #city {margin-bottom: 1rem;}
 
-.main-wrapper .loc-wrapper {flex: 100% 0 1; margin-left: 2%; background-color: rgba(0,0,0,0.4); color: #fff; padding: 2rem;}
-.loc-wrapper .title {font-size: 2em; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 0.75rem;}
-.loc-wrapper .title small {color: #f1d4a3;}
-.loc-wrapper .title small > :last-child {font-size: 0.875em;}
+.main-wrapper .weather-wrapper {width: calc(100% - 460px); margin-left: 20px; background-color: rgba(0,0,0,0.4); color: #fff; padding: 24px 36px;}
+.weather-wrapper .title {font-size: 2em; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 0.75rem;}
+.weather-wrapper .title small {color: #f1d4a3;}
+.weather-wrapper .title small > :last-child {font-size: 0.875em;}
 
-.cont-wrapper {padding: 1rem 0;}
-.daily-weather {display: flex; flex-wrap: wrap;}
+.daily-weather {display: flex; flex-wrap: wrap; border-bottom: 1px solid rgba(255,255,255,0.3);}
 .daily-weather > .icon-wrap {flex: 30% 0 0; display: flex; align-items: center; justify-content: center;}
 .daily-weather > .cont-wrap {flex: 70% 0 0;}
 .daily-weather .temp-wrap {font-size: 2rem; padding: 0.75rem 0;}
@@ -54,24 +56,49 @@ html, body {font-size: 16px; background: url(../img/bg1.jpg)no-repeat center; ba
 .daily-weather .desc-wrap {font-size: 1.75rem;}
 .daily-weather .press-wrap {font-size: 1.25rem; padding: 0.5rem 0;}
 .daily-weather .wind-wrap {font-size: 1.25rem; padding-bottom: 0.5rem;}
-.daily-weather > .misc-wrap {flex: 100% 0 0; text-align: center; margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.3);}
+.daily-weather > .misc-wrap {flex: 100% 0 0; text-align: center; margin-bottom: 0.75rem;}
 
+.weekly-title {font-size: 1.75em; text-align: center; margin: 0.5em 0;}
+.weather-wrapper .weekly-weather {width: 100%; position: relative; margin-top: 12px; }
+.weekly-weather .slide-wrapper {width: 100%; position: relative; display: flex;}
+.weekly-weather .slide {flex: 33.3333% 0 0;  text-align: center;}
+.weekly-weather .slide > div {margin: 2%; padding: 1%; padding-bottom: 16px; background-color: rgba(0,0,0, 0.5);}
+.weekly-weather .bt-angle {font-size: 4em; line-height: 4em; color: #fff; position: absolute; top:  calc(50% - 2em); user-select: none; cursor: pointer; transition: all 0.5s; opacity: 0.3;}
+.weekly-weather .desc-wrap,
+.weekly-weather .press-wrap,
+.weekly-weather .wind-wrap {color: #aaa;}
+.weekly-weather .time {padding-top: 0.325em; border-top: 1px solid rgba(255,255,255,0.3);}
+.weekly-weather .bt-angle:hover {transform: scale(1.2); opacity: 1;}
+.weekly-weather .bt-prev {left: 0; z-index: 9;}
+.weekly-weather .bt-next {right: 0; z-index: 9;}
 
+/***************** 반응형 *******************/
+@media screen and (max-width: 1199px) {
+	.weekly-weather .slide {flex: 50% 0 0;}
+}
 
-/* 반응 */
 @media screen and (max-width: 991px) {
-	
+	.main-wrapper .map-wrapper {flex: 100% 0 0; height: 60px;}
+	.main-wrapper .weather-wrapper {flex: 100% 0 0; margin-left: 0;}
+	#map {display: none;}
+	.weekly-weather .slide {flex: 33.3333% 0 0;}
 }
 
 @media screen and (max-width: 767px) {
-	.header .navi-pc {display: none;}
-	.header .navi-mobile {display: block;}
+	.header {align-items: center;}
 	.header > .logo-wrap > .logo {width: 60px;}
 	.header .logo-text > div {font-size: 2em;}
-	.header {align-items: center;}
+	.daily-weather > .icon-wrap {flex: 100% 0 0;}
+	.daily-weather > .cont-wrap {flex: 100% 0 0;}
+	.weather-wrapper span.title-loc {display: block;}
+	.weekly-weather .slide {flex: 50% 0 0;}
 }
 
 @media screen and (max-width: 575px) {
 	.header .logo-text > div {font-size: 1.75em;}
-	
+	.daily-weather .temp-wrap {font-size: 1.5rem;}
+	.daily-weather .desc-wrap {font-size: 1.325rem;}
+	.header-wrapper > .logo-wrap > .logo {width: 100px;} 
+	.header-wrapper .logo-text > div {font-size: 2.5em;} 
+	.weekly-weather .slide {flex: 100% 0 0;}
 }

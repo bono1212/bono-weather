@@ -4,14 +4,15 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>weather</title>
-
 	<link rel="stylesheet" href="../css/all.min.css">
 	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/swiper-bundle.min.css">
 	<link rel="stylesheet" href="../css/base.css">
 	<link rel="stylesheet" href="../css/index.css">
 	<script src="../js/jquery-3.5.1.min.js"></script>
 	<script src="../js/imagesloaded.pkgd.min.js"></script>
 	<script src="../js/moment.min.js"></script>
+	<script src="../js/swiper-bundle.min.js"></script>
 </head>
 <body>
 	<div class="wrapper">
@@ -33,17 +34,17 @@
 				<div class="map-wrapper">
 					<div class="city-wrap">
 						<select name="city" id="city" class="form-control">
-							<option value="" selected>도시를 선택하세요!</option>
+							<option value="" selected>도시를 선택하세요</option>
 						</select>
 					</div>
 					<div id="map"></div>
 				</div>
-				<div class="loc-wrapper">
+				<div class="weather-wrapper">
 					<h2 class="title">
 						<span class="title-loc"></span>
 						<small>
-							 - <span class="title-date"></span>
-							 <span class="title-time"></span>
+							- <span class="title-date"></span>
+							<span class="title-time"></span>
 						</small>
 					</h2>
 					<div class="cont-wrapper">
@@ -53,48 +54,42 @@
 							</div>
 							<div class="cont-wrap">
 								<h3 class="temp-wrap">
-									온도: <span class="temp"></span>
+									온도: <span class="temp"></span>℃ /
 									<small>
-										체감온도: <span class="temp-feel"></span></small>
-									</h3>
-									<h3 class="desc-wrap">
-										<span class="desc-title"></span> /
-										<span class="desc"></span>
-									</h3>
-									<div class="press-wrap">
-										기압: <span class="pressure"></span>mmHg /
-										습도: <span class="humidity"></span>% 
-									</div>
-									<div class="wind-wrap">바람: <span class="wind">북서풍</span> - <span class="wind-speed"></span>m/s</div>
+										체감온도: <span class="temp-feel"></span>℃
+									</small>
+								</h3>
+								<h3 class="desc-wrap">
+									<span class="desc-title"></span> /
+									<span class="desc"></span>
+								</h3>
+								<div class="press-wrap">
+									기압: <span class="pressure"></span>mmHg |
+									습도: <span class="humidity"></span>%
+								</div>
+								<div class="wind-wrap">
+									바람: <span class="wind"></span>
+									- <span class="wind-speed"></span>m/s
+								</div>
 							</div>
 							<div class="misc-wrap">
 								일출: <span class="sunrise"></span> |
 								일몰: <span class="sunset"></span>
 							</div>
 						</div>
-						<div class="weekly-weather">
-
+						<!-- <h3 class="weekly-title">5Day 3Hour Forecast</h3> -->
+						<div class="weekly-weather swiper-container">
+							<div class="slide-wrapper swiper-wrapper">
+								
+							</div>
+							<div class="bt-prev bt-angle">〈</div>
+							<div class="bt-next bt-angle">〉</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="triangle"></div>
-			<!-- //main-wrapper -->
-
-
-			<!-- daily-wrapper -->
-			<div class="daily-wrapper wrap">
-
-			</div>
-			<!-- //daily-wrapper -->
-
-
-			<!-- weekly-wrapper -->
-			<div class="weekly-wrapper wrap">
-
-			</div>
-			<!-- //weekly-wrapper -->
+		<!-- // main-wrapper -->
 	</div>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2a5a73dc23f9e9a00cf1d978daecc143"></script>
 	<script src="../js/index.js"></script>

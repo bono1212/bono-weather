@@ -53,8 +53,8 @@ function onGetDaily(r, cls) {
 }
 
 
-/* ************** weathet info of current location ******************* */
-navigator.geolocation.getCurrentPosition(onGetPositon, onErrorPosition); //onGetPositon - medeelel awchirwl, onErrorPosition - awchirch chadhq bol
+/************** 현재위치 날씨 정보 **************/
+navigator.geolocation.getCurrentPosition(onGetPositon, onErrorPosition);
 function onGetPositon(r) {
 	sendData.id = null;
 	sendData.lat = r.coords.latitude;
@@ -66,8 +66,12 @@ function onErrorPosition(e) {
 	console.log(e);
 }
 
+/************** 페이지 새로고침 **************/
+$(".bt-position").click(function(){
+	location.reload();
+});
 
-/* **************도시정보 날씨정보 ******************* */
+/************** 도시정보 날씨 정보 **************/
 $("#city").change(onGetCityWeather);
 function onGetCityWeather() {
 	sendData.lat = null;
@@ -81,66 +85,115 @@ function onGetCityWeather() {
 	$.get(weeklyURL, sendData, onGetWeeklyWeather);
 }
 
-
-/* **************지도click 날씨정보 ******************* */
+/************** 지도클릭 날씨 정보 **************/
 function onCustomClick(id) {
 	$("#city").val(id).trigger("change");
 }
 
-
-/* **********현재 날씨 톨백************* */
+function windGen(deg) {
+	if(deg > 345 || deg <= 15) return '북풍';
+	else if(deg > 15 || deg <= 75) return '북동풍';
+	else if(deg > 75 || deg <= 105) return '동풍';
+	else if(deg > 105 || deg <= 165) return '남동풍';
+	else if(deg > 165 || deg <= 195) return '남풍';
+	else if(deg > 195 || deg <= 255) return '남서풍';
+	else if(deg > 255 || deg <= 285) return '서풍';
+	else if(deg > 285 || deg <= 345) return '북서풍';
+	else return '';
+}
+/************** 현재날씨 콜백 **************/
 function onGetDailyWeather(r) {
-	//YY/YYYY - M/MM - D/DD H/HH(24시간제)/h/hh(12시간제) - m/mm
-	 var dtDate = moment(r.dt * 1000).format('M월 D일'); //초단위 1970년부터 지금 까지 초 (js 초, java 밀리초)
-	 var dtTime = moment(r.dt * 1000).format('H시 m분'); //초단위 1970년부터 지금 까지 초 (js 초, java 밀리초)
-	 $(".loc-wrapper .title-date").text(dtDate);
-	 $(".loc-wrapper .title-time").text(dtTime);
-	 var locTitle = r.name + ' , '+ r.sys.country;
-	 $(".loc-wrapper .title-loc").text(locTitle);
-	 var icon = 'https://openweathermap.org/img/wn/'+r.weather[0].icon+'@2x.png';
-	 $(".daily-weather .icon-wrap img").attr("src", icon);
-	 var temp = r.main.temp;
-	 $(".daily-weather .temp").text(temp);
-	 var tempFeel = r.main.feels_like;
-	 $(".daily-weather .temp-feel").text(tempFeel);
-	 var descTitle = r.weather[0].main;
-	 $(".daily-weather .desc-title").text(descTitle);
-	 var desc = r.weather[0].description;
-	 $(".daily-weather .desc").text(desc);
-	 var humidity = r.main.humidity;
-	 $(".daily-weather .humidity").text(humidity);
-	 var pressure = r.main.pressure;
-	 $(".daily-weather .pressure").text(pressure);
-	 var sunrise = moment(r.sys.sunrise * 1000).format("HH시 mm분 ss초");
-	 $(".daily-weather .sunrise").text(sunrise);
-	 var sunset = moment(r.sys.sunset * 1000).format("HH시 mm분 ss초");
-	 $(".daily-weather .sunset").text(sunset);
-	 var windSpeed = r.wind.speed;
-	 $(".daily-weather .wind-speed").text(windSpeed);
-	 var deg = r.wind.deg;
-	 var windTxt = '';
-	 if(deg > 345 || deg <= 15) windTxt = '북풍';
-	 if(deg > 15 || deg <= 75) windTxt = '북동풍';
-	 if(deg > 75 || deg <= 105) windTxt = '동풍';
-	 if(deg > 105 || deg <= 165) windTxt = '남동풍';
-	 if(deg > 165 || deg <= 195) windTxt = '남풍';
-	 if(deg > 195 || deg <= 255) windTxt = '남서풍';
-	 if(deg > 255 || deg <= 285) windTxt = '서풍';
-	 if(deg > 285 || deg <= 345) windTxt = '북서풍';
-	 $(".daily-weather .wind").text(windTxt);
-} 
-
+	// console.log(r);
+	// YY/YYYY - M/MM - D/DD - H/HH(24시간제)/h/hh(12시간제) - m/mm
+	var dtDate = moment(r.dt * 1000).format('M월 D일');
+	var dtTime = moment(r.dt * 1000).format('H시 m분');
+	$(".weather-wrapper .title-date").text(dtDate);
+	$(".weather-wrapper .title-time").text(dtTime);
+	var locTitle = r.name + ', ' + r.sys.country;
+	$(".weather-wrapper .title-loc").text(locTitle);
+	var icon = 'https://openweathermap.org/img/wn/'+r.weather[0].icon+'@2x.png';
+	$(".daily-weather .icon-wrap img").attr("src", icon);
+	var temp = r.main.temp;
+	$(".daily-weather .temp").text(temp);
+	var tempFeel = r.main.feels_like;
+	$(".daily-weather .temp-feel").text(tempFeel);
+	var descTitle = r.weather[0].main;
+	$(".daily-weather .desc-title").text(descTitle);
+	var desc = r.weather[0].description;
+	$(".daily-weather .desc").text(desc);
+	var humidity = r.main.humidity;
+	$(".daily-weather .humidity").text(humidity);
+	var pressure = r.main.pressure;
+	$(".daily-weather .pressure").text(pressure);
+	var sunrise = moment(r.sys.sunrise * 1000).format("HH시 mm분 ss초");
+	$(".daily-weather .sunrise").text(sunrise);
+	var sunset = moment(r.sys.sunset * 1000).format("HH시 mm분 ss초");
+	$(".daily-weather .sunset").text(sunset);
+	var windSpeed = r.wind.speed;
+	$(".daily-weather .wind-speed").text(windSpeed);
+	$(".daily-weather .wind").text(windGen(r.wind.deg));
+}
 function onGetWeeklyWeather(r) {
-	//console.log(r);
+	console.log(r);
+	var html = '', v = null;
+	$(".weekly-weather .slide-wrapper").empty();
+	for(var i in r.list) {
+		v = r.list[i];
+		html 	= '<div class="slide swiper-slide">';
+		html += '<div>';
+		html += '<div class="icon">';
+		html += '<img src="https://openweathermap.org/img/wn/'+v.weather[0].icon+'@2x.png" alt="아이콘">';
+		html += '</div>';
+		html += '<div class="temp-wrap">';
+		html += '<span class="temp">'+v.main.temp+'</span>℃ '; 
+		html += '(체감: <span class="temp-feel">'+v.main.feels_like+'</span>℃)';
+		html += '</div>';
+		html += '<div class="press-wrap">';
+		html += '기압: <span class="pressure">'+v.main.pressure+'</span>mmHg<br>';
+		html += '습도: <span class="humidity">'+v.main.humidity+'</span>%';
+		html += '</div>';
+		html += '<div class="wind-wrap">';
+		html += '바람: <span class="wind">'+windGen(v.wind.deg)+'</span>';
+		html += '- <span class="wind-speed">'+v.wind.speed+'</span>m/s';
+		html += '</div>';
+		html += '<div class="time">'+moment(v.dt * 1000).format('M월 D일 H시 기준')+'</div>';
+		html += '</div>';
+		html += '</div>';
+		$(".weekly-weather .slide-wrapper").append(html);
+	}
+	function getCount() {
+		var wid = $(window).outerWidth();
+		var count = 3;
+		if(wid <= 1199 && wid > 991) count = 2;
+		else if(wid <= 991 && wid > 767) count = 3;
+		else if(wid <= 767 && wid > 575) count = 2;
+		else if(wid <= 575) count = 1;
+		return count;
+	}
+	var swiper = new Swiper('.swiper-container', {
+		slidesPerView: getCount(),
+		slidesPerGroup: getCount(),
+		spaceBetween: 0,
+		freeMode: true,
+		loopFillGroupWithBlank: true,
+		navigation: {
+			nextEl: '.bt-angle.bt-next',
+			prevEl: '.bt-angle.bt-prev',
+		},
+	});
+	swiper.on("resize", function() {
+		this.params.slidesPerGroup = getCount();
+		this.params.slidesPerView = getCount();
+	});
 }
 
 
-/* 
+/*
 1. Daily content
 - r.main.temp 온도
 - r.main.feels_like 체감온도
-- r.weather[0].main 날씨 제목
-- r.weather[0].description 날씨 설명
+-	r.weather[0].main 날씨 제목
+-	r.weather[0].description 날씨 설명
 - r.main.humidity 습도
 - r.main.pressure 기압
 - r.sys.sunrise 일출(ts)
